@@ -1,44 +1,51 @@
 'use client';
+import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 
 export default function Cart() {
-  const { 
-    cart, 
-    isCartOpen, 
-    setIsCartOpen, 
-    removeFromCart, 
-    updateQuantity, 
+  const {
+    cart,
+    isCartOpen,
+    setIsCartOpen,
+    removeFromCart,
+    updateQuantity,
     getCartTotal,
-    clearCart // Assuming you can add this to Context
+    clearCart,
   } = useCart();
 
+  const [order, setOrder] = useState(null);
+
   const subtotal = getCartTotal();
-  const tax = subtotal * 0.08; 
-  const shipping = subtotal > 100 ? 0 : 10; 
+  const tax = subtotal * 0.08;
+  const shipping = subtotal > 100 ? 0 : 10;
   const total = subtotal + tax + shipping;
 
   const handleCheckout = () => {
-    alert("Order Confirmed! Thank you for shopping.");
+    const orderId = 'KRT-' + Math.floor(100000 + Math.random() * 900000);
+    setOrder({
+      id: orderId,
+      items: cart.map((i) => ({ ...i })),
+      subtotal,
+      tax,
+      shipping,
+      total,
+    });
     setIsCartOpen(false);
-    // Optional: Reset cart after checkout
-    if (clearCart) clearCart(); 
+    if (clearCart) clearCart();
   };
 
   return (
     <>
       {/* Overlay Background */}
       <div className={`overlay ${isCartOpen ? 'show' : ''}`} onClick={() => setIsCartOpen(false)}></div>
-      
+
       {/* Drawer */}
       <div className={`drawer ${isCartOpen ? 'open' : ''}`}>
-        
-        {/* Header */}
         <div className="drawer-head">
           <h2>Your Cart</h2>
           <button className="icon-btn" onClick={() => setIsCartOpen(false)}>✕</button>
         </div>
 
-        {/* Body (Items) */}
         <div className="drawer-body">
           {cart.length === 0 ? (
             <div className="center muted">
@@ -66,7 +73,6 @@ export default function Cart() {
           )}
         </div>
 
-        {/* Footer (Summary) */}
         {cart.length > 0 && (
           <div className="drawer-foot">
             <div className="sum"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
@@ -77,6 +83,66 @@ export default function Cart() {
           </div>
         )}
       </div>
+
+      {/* Order confirmation modal */}
+      {order && (
+        <div
+          onClick={() => setOrder(null)}
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 1000, padding: 16,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            style={{
+              background: '#fff', color: '#0b1220', borderRadius: 16,
+              width: '100%', maxWidth: 440, padding: 28, maxHeight: '90vh', overflowY: 'auto',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+            }}
+          >
+            <div style={{ textAlign: 'center', marginBottom: 16 }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: '50%', background: '#e6f7ee',
+                color: '#0a9d58', fontSize: 28, display: 'flex',
+                alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px',
+              }}>✓</div>
+              <h2 style={{ margin: 0 }}>Order Confirmed!</h2>
+              <p style={{ margin: '6px 0 0', color: '#667085' }}>
+                Thank you for shopping. Order number <strong>{order.id}</strong>
+              </p>
+            </div>
+
+            <div style={{ borderTop: '1px solid #eee', borderBottom: '1px solid #eee', padding: '12px 0', margin: '12px 0' }}>
+              {order.items.map((i) => (
+                <div key={i.id} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 14, padding: '4px 0' }}>
+                  <span>{i.title} × {i.quantity}</span>
+                  <span>${(i.price * i.quantity).toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ fontSize: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Subtotal</span><span>${order.subtotal.toFixed(2)}</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Tax (8%)</span><span>${order.tax.toFixed(2)}</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Shipping</span><span>{order.shipping === 0 ? 'Free' : `$${order.shipping.toFixed(2)}`}</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: 16, marginTop: 8 }}>
+                <span>Total</span><span>${order.total.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <button className="btn block" style={{ marginTop: 20 }} onClick={() => setOrder(null)}>
+              Continue Shopping
+            </button>
+            <p style={{ textAlign: 'center', color: '#98a2b3', fontSize: 12, margin: '12px 0 0' }}>
+              Demo store. No real payment was taken.
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
