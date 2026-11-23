@@ -1,9 +1,23 @@
 'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useCart } from '../context/CartContext';
 
-export default function Header() {
+export default function Header({ hideSearch = false }) {
   const { cart, setIsCartOpen } = useCart();
   const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
+
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    router.replace(
+      value.trim() ? `/?q=${encodeURIComponent(value.trim())}` : '/',
+      { scroll: false }
+    );
+  };
 
   return (
     <>
@@ -16,7 +30,17 @@ export default function Header() {
           <a href="/" className="logo">
             <span>K</span> Kart
           </a>
-          <input type="text" className="search" placeholder="Search products or brands..." />
+          {hideSearch ? (
+            <div style={{ flex: 1 }} />
+          ) : (
+            <input
+              type="text"
+              className="search"
+              placeholder="Search products or brands..."
+              value={query}
+              onChange={handleSearch}
+            />
+          )}
           <button className="cart-btn" onClick={() => setIsCartOpen(true)} aria-label="Open Cart">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1"></circle>
