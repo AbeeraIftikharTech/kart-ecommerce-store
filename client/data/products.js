@@ -5,7 +5,7 @@ export const fallbackProducts = [
     price: 109.95,
     description: "Your perfect pack for everyday use and walks in the forest.",
     category: "men's clothing",
-    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop",
     rating: { rate: 3.9, count: 120 },
   },
   {
@@ -23,7 +23,7 @@ export const fallbackProducts = [
     price: 55.99,
     description: "Great outerwear jackets for spring, autumn and winter.",
     category: "men's clothing",
-    image: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop",
     rating: { rate: 4.7, count: 500 },
   },
   {
@@ -32,7 +32,7 @@ export const fallbackProducts = [
     price: 15.99,
     description: "Slim fit casual shirt in a soft, comfortable fabric.",
     category: "men's clothing",
-    image: "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=800&auto=format&fit=crop",
     rating: { rate: 2.1, count: 430 },
   },
   {
@@ -41,7 +41,7 @@ export const fallbackProducts = [
     price: 695,
     description: "Gold and silver dragon station chain bracelet.",
     category: "jewelery",
-    image: "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop",
     rating: { rate: 4.6, count: 400 },
   },
   {
@@ -50,7 +50,7 @@ export const fallbackProducts = [
     price: 168,
     description: "Satisfaction guaranteed. Return or exchange within 30 days.",
     category: "jewelery",
-    image: "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
+    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=800&auto=format&fit=crop",
     rating: { rate: 3.9, count: 70 },
   },
   {
@@ -59,7 +59,7 @@ export const fallbackProducts = [
     price: 9.99,
     description: "Classic princess-cut ring, perfect for gifts.",
     category: "jewelery",
-    image: "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
+    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop",
     rating: { rate: 3.0, count: 400 },
   },
   {
@@ -68,7 +68,7 @@ export const fallbackProducts = [
     price: 10.99,
     description: "Rose gold plated double flared tunnel plug earrings.",
     category: "jewelery",
-    image: "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
+    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
     rating: { rate: 1.9, count: 100 },
   },
 ];
