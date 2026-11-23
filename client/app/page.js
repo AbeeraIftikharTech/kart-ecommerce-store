@@ -3,16 +3,21 @@ import Hero from '../components/Hero';
 import Footer from '../components/Footer';
 import Cart from '../components/Cart';
 import ProductCard from '../components/ProductCard';
+import { fallbackProducts } from '../data/products';
 
-// This function runs on the server, not in the browser
+// Runs on the server. If the API fails, we use local products instead of crashing.
 async function getProducts() {
-  const res = await fetch('https://fakestoreapi.com/products', { 
-    cache: 'no-store' // Ensures fresh data
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch products');
+  try {
+    const res = await fetch('https://fakestoreapi.com/products', {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) throw new Error('Bad response: ' + res.status);
+    const data = await res.json();
+    return Array.isArray(data) && data.length > 0 ? data : fallbackProducts;
+  } catch (err) {
+    console.error('Products fetch failed:', err);
+    return fallbackProducts;
   }
-  return res.json();
 }
 
 export default async function Home() {
