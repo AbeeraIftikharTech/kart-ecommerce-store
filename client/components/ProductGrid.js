@@ -9,8 +9,8 @@ export default function ProductGrid({ products }) {
   const filtered = q
     ? products.filter(
         (p) =>
-          p.title.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q)
+          String(p.title || '').toLowerCase().includes(q) ||
+          String(p.category || '').toLowerCase().includes(q)
       )
     : products;
 
@@ -18,7 +18,7 @@ export default function ProductGrid({ products }) {
     return (
       <div className="state">
         <h3>No products found</h3>
-        <p>Nothing matches "{q}". Try a different search.</p>
+        <p>Nothing matches &quot;{q}&quot;. Try a different search.</p>
       </div>
     );
   }
