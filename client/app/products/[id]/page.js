@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import Cart from '../../../components/Cart';
 import ProductCard from '../../../components/ProductCard';
 import AddToCartButton from '../../../components/AddToCartButton';
 import { fallbackProducts } from '../../../data/products';
@@ -91,6 +92,7 @@ export default async function ProductPage({ params }) {
         )}
       </main>
       <Footer />
+      <Cart />
     </div>
   );
 }
