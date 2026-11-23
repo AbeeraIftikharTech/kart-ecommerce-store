@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useCart } from '../context/CartContext';
 
 const PLACEHOLDER =
@@ -10,13 +11,14 @@ export default function ProductCard({ product }) {
   const rate = Number(product?.rating?.rate) || 0;
   const count = Number(product?.rating?.count) || 0;
   const price = Number(product?.price) || 0;
+  const href = `/products/${product.id}`;
 
   return (
     <div className="card">
       <div className="tags">
         <span className="tag green">In Stock</span>
       </div>
-      <div className="card-img">
+      <Link href={href} className="card-img">
         <img
           src={product.image}
           alt={product.title}
@@ -26,10 +28,14 @@ export default function ProductCard({ product }) {
             e.currentTarget.src = PLACEHOLDER;
           }}
         />
-      </div>
+      </Link>
       <div className="card-body">
         <span className="card-brand plain">{product.category}</span>
-        <h3>{product.title}</h3>
+        <h3>
+          <Link href={href} style={{ color: 'inherit' }}>
+            {product.title}
+          </Link>
+        </h3>
         <div className="rating">
           <span className="stars" style={{ '--p': `${(rate / 5) * 100}%` }}></span>
           <span>{rate} ({count})</span>
